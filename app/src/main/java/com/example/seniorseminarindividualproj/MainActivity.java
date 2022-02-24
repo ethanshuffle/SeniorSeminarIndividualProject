@@ -100,8 +100,12 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
+            //Creates bitmap then compresses it
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                Bitmap uncompressedBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+
+                bitmap = Bitmap.createScaledBitmap(uncompressedBitmap, 300, 300, true);
+
             } catch (IOException e) {
                 Log.e("PTRDryRun", "Error reading image", e);
             }
